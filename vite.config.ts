@@ -5,15 +5,17 @@ import fs from "node:fs";
 import path from "node:path";
 import { defineConfig, type Plugin, type ViteDevServer } from "vite";
 
+// Detecta se a compilação atual é de Produção (Build)
+const isProd = process.env.NODE_ENV === "production";
+
 // =============================================================================
-// Manus Debug Collector - Vite Plugin
-// Writes browser logs directly to files, trimmed when exceeding size limit
+// Manus Debug Collector - Vite Plugin (Desativado em produção)
 // =============================================================================
 
 const PROJECT_ROOT = import.meta.dirname;
 const LOG_DIR = path.join(PROJECT_ROOT, ".manus-logs");
 const MAX_LOG_SIZE_BYTES = 1 * 1024 * 1024; // 1MB per log file
-const TRIM_TARGET_BYTES = Math.floor(MAX_LOG_SIZE_BYTES * 0.6); // Trim to 60% to avoid constant re-trimming
+const TRIM_TARGET_BYTES = Math.floor(MAX_LOG_SIZE_BYTES * 0.6);
 
 type LogSource = "browserConsole" | "networkRequests" | "sessionReplay";
 
@@ -33,7 +35,6 @@ function trimLogFile(logPath: string, maxSize: number) {
     const keptLines: string[] = [];
     let keptBytes = 0;
 
-    // Keep newest lines (from end) that fit within 60% of maxSize
     const targetSize = TRIM_TARGET_BYTES;
     for (let i = lines.length - 1; i >= 0; i--) {
       const lineBytes = Buffer.byteLength(`${lines[i]}\n`, "utf-8");
@@ -54,16 +55,12 @@ function writeToLogFile(source: LogSource, entries: unknown[]) {
   ensureLogDir();
   const logPath = path.join(LOG_DIR, `${source}.log`);
 
-  // Format entries with timestamps
   const lines = entries.map((entry) => {
     const ts = new Date().toISOString();
     return `[${ts}] ${JSON.stringify(entry)}`;
   });
 
-  // Append to log file
   fs.appendFileSync(logPath, `${lines.join("\n")}\n`, "utf-8");
-
-  // Trim if exceeds max size
   trimLogFile(logPath, MAX_LOG_SIZE_BYTES);
 }
 
@@ -99,11 +96,11 @@ function manusDebugCollector(): Plugin {
 }
 
 export default defineConfig({
+  // Desativa os plugins de debug/ferramentas de dev durante a compilação final
   plugins: [
     react(),
     tailwindcss(),
-    jsxLocPlugin(),
-    manusDebugCollector(),
+    ...(!isProd ? [jsxLocPlugin(), manusDebugCollector()] : []),
   ],
   resolve: {
     alias: {
@@ -116,11 +113,13 @@ export default defineConfig({
   root: path.resolve(import.meta.dirname, "client"),
   publicDir: path.resolve(import.meta.dirname, "client", "public"),
   build: {
-    outDir: path.resolve(import.meta.dirname, "dist/public"),
+    outDir: path.resolve(import.meta.dirname, "dist"), // Simplificado para dist para facilitar o deploy no GitHub
     emptyOutDir: true,
   },
   server: {
     host: true,
+    // Desativa HMR/WebSocket em produção para evitar chamadas 'wss://'
+    hmr: isProd ? false : undefined,
     fs: {
       strict: true,
       deny: ["**/.*"],
