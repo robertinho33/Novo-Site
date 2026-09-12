@@ -1,84 +1,279 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="pt-BR">
+
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="description" content="AurÃ©a â€” uma experiÃªncia moderna para descobrir produtos de beleza.">
-  <title>AurÃ©a â€” Beauty Studio</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <meta
+    name="description"
+    content="Auréa — uma experiência moderna para descobrir produtos de beleza."
+  >
+
+  <title>Auréa — Beauty Studio</title>
+
   <link rel="stylesheet" href="css/style.css">
 </head>
+
 <body>
+
   <header class="topbar">
-    <a class="brand" href="#"><span>A</span> AURÃ‰A</a>
+    <a class="brand" href="#">
+      <span>A</span> AURÉA
+    </a>
+
     <nav>
-      <a href="#colecao">ColeÃ§Ã£o</a>
+      <a href="#colecao">Coleção</a>
       <a href="#ritual">Ritual</a>
       <a href="#sobre">Sobre</a>
     </nav>
-    <button class="cart-button" id="openCart" aria-label="Abrir carrinho">Sacola <b id="cartCount">0</b></button>
+
+    <button
+      class="cart-button"
+      id="openCart"
+      type="button"
+      aria-label="Abrir sacola"
+    >
+      Sacola
+      <b id="cartCount">0</b>
+    </button>
   </header>
 
   <main>
+
     <section class="hero">
+
       <div class="hero-copy">
-        <p class="eyebrow">BEAUTY â€¢ CARE â€¢ RITUAL</p>
-        <h1>Beleza que<br><em>comeÃ§a</em> no ritual.</h1>
-        <p class="hero-text">Uma loja digital pensada para transformar a escolha de produtos em uma experiÃªncia simples, elegante e pessoal.</p>
-        <a class="primary" href="#colecao">Explorar coleÃ§Ã£o <span>â†’</span></a>
+
+        <p class="eyebrow">
+          BEAUTY • CARE • RITUAL
+        </p>
+
+        <h1>
+          Beleza que<br>
+          <em>começa</em> no ritual.
+        </h1>
+
+        <p class="hero-text">
+          Uma loja digital pensada para transformar a escolha
+          de produtos em uma experiência simples, elegante e pessoal.
+        </p>
+
+        <a class="primary" href="#colecao">
+          Explorar coleção
+          <span>→</span>
+        </a>
+
       </div>
+
       <div class="hero-card">
         <div class="orb"></div>
         <div class="product-shape"></div>
-        <div class="floating-note">ESSENCIAL<br><strong>para vocÃª.</strong></div>
+
+        <div class="floating-note">
+          ESSENCIAL<br>
+          <strong>para você.</strong>
+        </div>
       </div>
+
     </section>
+
 
     <section id="colecao" class="collection">
+
       <div class="section-head">
+
         <div>
-          <p class="eyebrow">CURADORIA AURÃ‰A</p>
-          <h2>Escolha seu momento.</h2>
+          <p class="eyebrow">
+            CURADORIA AURÉA
+          </p>
+
+          <h2>
+            Escolha seu momento.
+          </h2>
         </div>
-        <div class="filters" id="filters">
-          <button class="active" data-category="todos">Todos</button>
-          <button data-category="cabelo">Cabelo</button>
-          <button data-category="pele">Pele</button>
-          <button data-category="ritual">Ritual</button>
-        </div>
+
+        <div
+          class="filters"
+          id="filters"
+          aria-label="Categorias de produtos"
+        ></div>
+
       </div>
-      <div class="products" id="products"></div>
+
+      <div
+        class="products"
+        id="products"
+      ></div>
+
     </section>
+
 
     <section id="ritual" class="ritual">
+
       <div>
-        <p class="eyebrow">SEU RITUAL</p>
-        <h2>Menos complicaÃ§Ã£o.<br><em>Mais intenÃ§Ã£o.</em></h2>
+        <p class="eyebrow">
+          SEU RITUAL
+        </p>
+
+        <h2>
+          Menos complicação.<br>
+          <em>Mais intenção.</em>
+        </h2>
       </div>
+
       <div class="steps">
-        <article><span>01</span><h3>Descubra</h3><p>Produtos selecionados por funÃ§Ã£o, nÃ£o por excesso.</p></article>
-        <article><span>02</span><h3>Escolha</h3><p>Monte uma rotina que faÃ§a sentido para seu dia.</p></article>
-        <article><span>03</span><h3>Cuide</h3><p>Pequenos rituais criam grandes diferenÃ§as.</p></article>
+
+        <article>
+          <span>01</span>
+          <h3>Descubra</h3>
+          <p>
+            Produtos selecionados por função, não por excesso.
+          </p>
+        </article>
+
+        <article>
+          <span>02</span>
+          <h3>Escolha</h3>
+          <p>
+            Monte uma rotina que faça sentido para seu dia.
+          </p>
+        </article>
+
+        <article>
+          <span>03</span>
+          <h3>Cuide</h3>
+          <p>
+            Pequenos rituais criam grandes diferenças.
+          </p>
+        </article>
+
       </div>
+
     </section>
+
 
     <section id="sobre" class="manifesto">
-      <p class="eyebrow">A IDEIA</p>
-      <blockquote>â€œO melhor produto Ã© aquele que encontra espaÃ§o na sua rotina.â€</blockquote>
-      <p>Design limpo, navegaÃ§Ã£o rÃ¡pida e uma experiÃªncia feita para funcionar tÃ£o bem no celular quanto no desktop.</p>
+
+      <p class="eyebrow">
+        A IDEIA
+      </p>
+
+      <blockquote>
+        “O melhor produto é aquele que encontra espaço na sua rotina.”
+      </blockquote>
+
+      <p>
+        Design limpo, navegação rápida e uma experiência feita
+        para funcionar tão bem no celular quanto no desktop.
+      </p>
+
     </section>
+
   </main>
 
-  <aside class="drawer" id="cartDrawer" aria-hidden="true">
-    <div class="drawer-head"><h2>Sua sacola</h2><button id="closeCart">Ã—</button></div>
-    <div id="cartItems" class="cart-items"></div>
-    <div class="cart-footer">
-      <div><span>Total</span><strong id="cartTotal">R$ 0,00</strong></div>
-      <button class="primary checkout" id="checkout">Finalizar pedido</button>
-    </div>
-  </aside>
-  <div class="backdrop" id="backdrop"></div>
 
-  <footer><span>Â© 2026 AURÃ‰A</span><span>Feito para uma vida mais bonita.</span></footer>
-  <script type="module" src="js/app.js"></script>
+  <aside
+    class="drawer"
+    id="cartDrawer"
+    aria-hidden="true"
+    aria-label="Sua sacola"
+  >
+
+    <div class="drawer-head">
+
+      <div>
+        <p class="eyebrow">
+          AURÉA
+        </p>
+
+        <h2>
+          Sua sacola
+        </h2>
+      </div>
+
+      <button
+        id="closeCart"
+        type="button"
+        aria-label="Fechar sacola"
+      >
+        ×
+      </button>
+
+    </div>
+
+
+    <div class="cart-summary-top">
+      <span id="cartSummary">
+        0 itens
+      </span>
+
+      <span>
+        Pedido
+      </span>
+    </div>
+
+
+    <div
+      id="cartItems"
+      class="cart-items"
+    ></div>
+
+
+    <div class="cart-footer">
+
+      <div class="cart-total-line">
+        <span>
+          Subtotal
+        </span>
+
+        <strong id="cartTotal">
+          R$ 0,00
+        </strong>
+      </div>
+
+      <p class="cart-note">
+        Frete e condições de pagamento serão definidos no checkout.
+      </p>
+
+      <button
+        class="primary checkout"
+        id="checkout"
+        type="button"
+      >
+        Finalizar pedido
+        <span>→</span>
+      </button>
+
+    </div>
+
+  </aside>
+
+
+  <div
+    class="backdrop"
+    id="backdrop"
+  ></div>
+
+
+  <footer>
+
+    <span>
+      © 2026 AURÉA
+    </span>
+
+    <span>
+      Feito para uma vida mais bonita.
+    </span>
+
+  </footer>
+
+
+  <script
+    type="module"
+    src="js/app.js"
+  ></script>
+
 </body>
+
 </html>

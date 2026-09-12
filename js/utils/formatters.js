@@ -1,4 +1,4 @@
-﻿'use strict';
+'use strict';
 
 /**
  * Formata valores numéricos para moeda brasileira.

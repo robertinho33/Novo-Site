@@ -1,4 +1,4 @@
-﻿'use strict';
+'use strict';
 
 const CATALOG_PATH = 'data/produtos.csv';
 

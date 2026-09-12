@@ -1,4 +1,4 @@
-'use strict';
+﻿'use strict';
 
 import { loadProducts } from './catalog/catalog-service.js';
 import { formatCurrency } from './utils/formatters.js';
@@ -13,7 +13,6 @@ const filtersEl = document.querySelector('#filters');
 const cartItemsEl = document.querySelector('#cartItems');
 const cartCountEl = document.querySelector('#cartCount');
 const cartTotalEl = document.querySelector('#cartTotal');
-const cartSummaryEl = document.querySelector('#cartSummary');
 const cartDrawerEl = document.querySelector('#cartDrawer');
 const backdropEl = document.querySelector('#backdrop');
 
@@ -504,4 +503,3 @@ async function init() {
 }
 
 init();
-
