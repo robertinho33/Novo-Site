@@ -1,4 +1,4 @@
-'use strict';
+﻿'use strict';
 
 import { loadProducts } from './catalog/catalog-service.js';
 import { formatCurrency } from './utils/formatters.js';
@@ -8,14 +8,36 @@ const CART_STORAGE_KEY = 'aurea-cart';
 let products = [];
 let cart = [];
 
+let selectedProductSku = null;
+let modalQuantity = 1;
+
 const productsEl = document.querySelector('#products');
 const filtersEl = document.querySelector('#filters');
+
 const cartItemsEl = document.querySelector('#cartItems');
 const cartCountEl = document.querySelector('#cartCount');
 const cartTotalEl = document.querySelector('#cartTotal');
 const cartSummaryEl = document.querySelector('#cartSummary');
+
 const cartDrawerEl = document.querySelector('#cartDrawer');
 const backdropEl = document.querySelector('#backdrop');
+
+const productModalEl = document.querySelector('#productModal');
+const productModalBackdropEl = document.querySelector('#productModalBackdrop');
+const closeProductModalButton = document.querySelector('#closeProductModal');
+
+const productModalImageEl = document.querySelector('#productModalImage');
+const productModalCategoryEl = document.querySelector('#productModalCategory');
+const productModalTitleEl = document.querySelector('#productModalTitle');
+const productModalDescriptionEl = document.querySelector('#productModalDescription');
+const productModalWeightEl = document.querySelector('#productModalWeight');
+const productModalStockEl = document.querySelector('#productModalStock');
+const productModalPriceEl = document.querySelector('#productModalPrice');
+
+const modalQuantityEl = document.querySelector('#modalQuantity');
+const modalDecreaseButton = document.querySelector('#modalDecrease');
+const modalIncreaseButton = document.querySelector('#modalIncrease');
+const modalAddToCartButton = document.querySelector('#modalAddToCart');
 
 function escapeHTML(value) {
     return String(value ?? '')
@@ -29,6 +51,11 @@ function escapeHTML(value) {
 function escapeAttribute(value) {
     return escapeHTML(value);
 }
+
+
+/* =========================================================
+   SACOLA
+   ========================================================= */
 
 function loadCart() {
     try {
@@ -51,6 +78,7 @@ function loadCart() {
                 sku: item.sku,
                 quantity: item.quantity
             }));
+
     } catch (error) {
         console.error('Erro ao carregar a sacola:', error);
         return [];
@@ -68,21 +96,48 @@ function getProductBySku(sku) {
     return products.find(product => product.sku === sku);
 }
 
-function getCartQuantity(sku) {
-    const item = cart.find(cartItem => cartItem.sku === sku);
-
-    return item ? item.quantity : 0;
+function getCartTotalQuantity() {
+    return cart.reduce(
+        (total, item) => total + item.quantity,
+        0
+    );
 }
 
-function addToCart(sku, quantity = 1, openDrawerAfter = true) {
+function getCartTotal() {
+    return cart.reduce((total, item) => {
+
+        const product = getProductBySku(item.sku);
+
+        if (!product) {
+            return total;
+        }
+
+        return total + (
+            product.price * item.quantity
+        );
+
+    }, 0);
+}
+
+function addToCart(
+    sku,
+    quantity = 1,
+    openDrawerAfter = true
+) {
     const product = getProductBySku(sku);
 
     if (!product) {
-        console.error('Produto não encontrado:', sku);
+        console.error(
+            'Produto não encontrado:',
+            sku
+        );
+
         return;
     }
 
-    const existing = cart.find(item => item.sku === sku);
+    const existing = cart.find(
+        item => item.sku === sku
+    );
 
     if (existing) {
         existing.quantity += quantity;
@@ -102,7 +157,9 @@ function addToCart(sku, quantity = 1, openDrawerAfter = true) {
 }
 
 function decreaseFromCart(sku) {
-    const item = cart.find(cartItem => cartItem.sku === sku);
+    const item = cart.find(
+        cartItem => cartItem.sku === sku
+    );
 
     if (!item) {
         return;
@@ -111,7 +168,9 @@ function decreaseFromCart(sku) {
     item.quantity -= 1;
 
     if (item.quantity <= 0) {
-        cart = cart.filter(cartItem => cartItem.sku !== sku);
+        cart = cart.filter(
+            cartItem => cartItem.sku !== sku
+        );
     }
 
     saveCart();
@@ -119,30 +178,18 @@ function decreaseFromCart(sku) {
 }
 
 function removeFromCart(sku) {
-    cart = cart.filter(item => item.sku !== sku);
+    cart = cart.filter(
+        item => item.sku !== sku
+    );
 
     saveCart();
     renderCart();
 }
 
-function getCartTotalQuantity() {
-    return cart.reduce(
-        (total, item) => total + item.quantity,
-        0
-    );
-}
 
-function getCartTotal() {
-    return cart.reduce((total, item) => {
-        const product = getProductBySku(item.sku);
-
-        if (!product) {
-            return total;
-        }
-
-        return total + (product.price * item.quantity);
-    }, 0);
-}
+/* =========================================================
+   FILTROS
+   ========================================================= */
 
 function renderFilters() {
     if (!filtersEl) {
@@ -160,11 +207,17 @@ function renderFilters() {
     );
 
     filtersEl.innerHTML = `
-        <button class="active" data-category="todos">
+        <button
+            class="active"
+            type="button"
+            data-category="todos"
+        >
             Todos
         </button>
+
         ${categories.map(category => `
             <button
+                type="button"
                 data-category="${escapeAttribute(category)}"
             >
                 ${escapeHTML(category)}
@@ -172,6 +225,11 @@ function renderFilters() {
         `).join('')}
     `;
 }
+
+
+/* =========================================================
+   PRODUTOS
+   ========================================================= */
 
 function renderProducts(category = 'todos') {
     if (!productsEl) {
@@ -187,13 +245,16 @@ function renderProducts(category = 'todos') {
         : products.filter(product =>
             String(product.category)
                 .trim()
-                .toLocaleLowerCase('pt-BR') === normalizedCategory
+                .toLocaleLowerCase('pt-BR') ===
+            normalizedCategory
         );
 
     if (!list.length) {
         productsEl.innerHTML = `
             <div class="catalog-empty">
-                <p>Nenhum produto encontrado nesta categoria.</p>
+                <p>
+                    Nenhum produto encontrado nesta categoria.
+                </p>
             </div>
         `;
 
@@ -201,6 +262,7 @@ function renderProducts(category = 'todos') {
     }
 
     productsEl.innerHTML = list.map(product => {
+
         const image = product.image
             ? `
                 <img
@@ -210,26 +272,53 @@ function renderProducts(category = 'todos') {
                     loading="lazy"
                 >
             `
+            : `
+                <div class="product-image-placeholder">
+                    AURÉA
+                </div>
+            `;
+
+        const weight = product.weight
+            ? escapeHTML(product.weight)
             : '';
 
         return `
-            <article class="product">
+            <article
+                class="product"
+                data-product-sku="${escapeAttribute(product.sku)}"
+                tabindex="0"
+                role="button"
+                aria-label="Ver detalhes de ${escapeAttribute(product.name)}"
+            >
+
                 <div class="product-visual">
+
                     ${image}
 
                     <span class="tag">
                         ${escapeHTML(product.category)}
                     </span>
+
                 </div>
 
                 <div class="product-info">
-                    <h3>${escapeHTML(product.name)}</h3>
+
+                    <h3>
+                        ${escapeHTML(product.name)}
+                    </h3>
 
                     <p>
                         ${escapeHTML(product.description)}
                     </p>
 
+                    ${weight ? `
+                        <small class="product-weight">
+                            ${weight}
+                        </small>
+                    ` : ''}
+
                     <div class="product-bottom">
+
                         <span class="price">
                             ${formatCurrency(product.price)}
                         </span>
@@ -238,16 +327,25 @@ function renderProducts(category = 'todos') {
                             class="add"
                             type="button"
                             data-add="${escapeAttribute(product.sku)}"
-                            aria-label="Adicionar ${escapeAttribute(product.name)}"
+                            aria-label="Adicionar ${escapeAttribute(product.name)} à sacola"
                         >
                             +
                         </button>
+
                     </div>
+
                 </div>
+
             </article>
         `;
+
     }).join('');
 }
+
+
+/* =========================================================
+   SACOLA — RENDER
+   ========================================================= */
 
 function renderCart() {
     if (!cartItemsEl) {
@@ -263,13 +361,23 @@ function renderCart() {
         saveCart();
     }
 
-    const totalQuantity = getCartTotalQuantity();
+    const totalQuantity =
+        getCartTotalQuantity();
 
     if (cartCountEl) {
-        cartCountEl.textContent = totalQuantity;
+        cartCountEl.textContent =
+            totalQuantity;
+    }
+
+    if (cartSummaryEl) {
+        cartSummaryEl.textContent =
+            totalQuantity === 1
+                ? '1 item'
+                : `${totalQuantity} itens`;
     }
 
     if (!cart.length) {
+
         cartItemsEl.innerHTML = `
             <div class="empty">
                 Sua sacola está esperando por você.
@@ -277,14 +385,17 @@ function renderCart() {
         `;
 
         if (cartTotalEl) {
-            cartTotalEl.textContent = formatCurrency(0);
+            cartTotalEl.textContent =
+                formatCurrency(0);
         }
 
         return;
     }
 
     cartItemsEl.innerHTML = cart.map(item => {
-        const product = getProductBySku(item.sku);
+
+        const product =
+            getProductBySku(item.sku);
 
         if (!product) {
             return '';
@@ -300,22 +411,29 @@ function renderCart() {
             `
             : '';
 
-        const subtotal = product.price * item.quantity;
+        const subtotal =
+            product.price * item.quantity;
 
         return `
             <div class="cart-row">
+
                 <div class="mini">
                     ${image}
                 </div>
 
                 <div class="cart-product-info">
-                    <h4>${escapeHTML(product.name)}</h4>
+
+                    <h4>
+                        ${escapeHTML(product.name)}
+                    </h4>
 
                     <small>
-                        ${formatCurrency(product.price)} cada
+                        ${formatCurrency(product.price)}
+                        cada
                     </small>
 
                     <div class="quantity-control">
+
                         <button
                             type="button"
                             data-decrease="${escapeAttribute(product.sku)}"
@@ -324,7 +442,9 @@ function renderCart() {
                             −
                         </button>
 
-                        <span>${item.quantity}</span>
+                        <span>
+                            ${item.quantity}
+                        </span>
 
                         <button
                             type="button"
@@ -333,11 +453,13 @@ function renderCart() {
                         >
                             +
                         </button>
+
                     </div>
 
                     <strong>
                         ${formatCurrency(subtotal)}
                     </strong>
+
                 </div>
 
                 <button
@@ -347,135 +469,432 @@ function renderCart() {
                 >
                     remover
                 </button>
+
             </div>
         `;
+
     }).join('');
 
     if (cartTotalEl) {
-        cartTotalEl.textContent = formatCurrency(
-            getCartTotal()
-        );
+        cartTotalEl.textContent =
+            formatCurrency(getCartTotal());
     }
 }
+
+
+/* =========================================================
+   DRAWER DA SACOLA
+   ========================================================= */
 
 function openCart() {
     cartDrawerEl?.classList.add('open');
     backdropEl?.classList.add('show');
 
-    cartDrawerEl?.setAttribute('aria-hidden', 'false');
+    cartDrawerEl?.setAttribute(
+        'aria-hidden',
+        'false'
+    );
 }
 
 function closeCart() {
     cartDrawerEl?.classList.remove('open');
     backdropEl?.classList.remove('show');
 
-    cartDrawerEl?.setAttribute('aria-hidden', 'true');
-}
-
-function showCatalogError(error) {
-    console.error('Erro ao carregar catálogo:', error);
-
-    if (!productsEl) {
-        return;
-    }
-
-    productsEl.innerHTML = `
-        <div class="catalog-error">
-            <h3>Não foi possível carregar o catálogo.</h3>
-            <p>
-                Verifique se o arquivo
-                <strong>data/produtos.csv</strong>
-                está disponível.
-            </p>
-        </div>
-    `;
-}
-
-filtersEl?.addEventListener('click', event => {
-    const button = event.target.closest('button[data-category]');
-
-    if (!button) {
-        return;
-    }
-
-    filtersEl
-        .querySelectorAll('button')
-        .forEach(item => {
-            item.classList.remove('active');
-        });
-
-    button.classList.add('active');
-
-    renderProducts(
-        button.dataset.category || 'todos'
+    cartDrawerEl?.setAttribute(
+        'aria-hidden',
+        'true'
     );
-});
+}
 
-productsEl?.addEventListener('click', event => {
-    const button = event.target.closest('[data-add]');
 
-    if (!button) {
+/* =========================================================
+   MODAL DE PRODUTO
+   ========================================================= */
+
+function updateModalQuantity() {
+    if (modalQuantityEl) {
+        modalQuantityEl.textContent =
+            modalQuantity;
+    }
+}
+
+function openProductModal(sku) {
+    const product =
+        getProductBySku(sku);
+
+    if (!product || !productModalEl) {
         return;
     }
 
-    addToCart(button.dataset.add);
-});
+    selectedProductSku = sku;
+    modalQuantity = 1;
 
-cartItemsEl?.addEventListener('click', event => {
-    const increaseButton =
-        event.target.closest('[data-increase]');
+    if (productModalCategoryEl) {
+        productModalCategoryEl.textContent =
+            product.category || 'Produto';
+    }
 
-    if (increaseButton) {
-        addToCart(
-            increaseButton.dataset.increase,
-            1,
-            false
-        );
+    if (productModalTitleEl) {
+        productModalTitleEl.textContent =
+            product.name;
+    }
 
+    if (productModalDescriptionEl) {
+        productModalDescriptionEl.textContent =
+            product.description || '';
+    }
+
+    if (productModalWeightEl) {
+        productModalWeightEl.textContent =
+            product.weight || 'Não informado';
+    }
+
+    if (productModalStockEl) {
+        productModalStockEl.textContent =
+            product.stock || 'Não informado';
+    }
+
+    if (productModalPriceEl) {
+        productModalPriceEl.textContent =
+            formatCurrency(product.price);
+    }
+
+    if (productModalImageEl) {
+
+        if (product.image) {
+            productModalImageEl.src =
+                product.image;
+
+            productModalImageEl.alt =
+                product.name;
+
+            productModalImageEl.hidden =
+                false;
+
+        } else {
+
+            productModalImageEl.removeAttribute(
+                'src'
+            );
+
+            productModalImageEl.alt = '';
+
+            productModalImageEl.hidden =
+                true;
+        }
+    }
+
+    updateModalQuantity();
+
+    productModalEl.classList.add('open');
+
+    productModalEl.setAttribute(
+        'aria-hidden',
+        'false'
+    );
+
+    document.body.classList.add(
+        'modal-open'
+    );
+
+    requestAnimationFrame(() => {
+        closeProductModalButton?.focus();
+    });
+}
+
+function closeProductModal() {
+    if (!productModalEl) {
         return;
     }
 
-    const decreaseButton =
-        event.target.closest('[data-decrease]');
+    productModalEl.classList.remove(
+        'open'
+    );
 
-    if (decreaseButton) {
-        decreaseFromCart(
-            decreaseButton.dataset.decrease
-        );
+    productModalEl.setAttribute(
+        'aria-hidden',
+        'true'
+    );
 
+    document.body.classList.remove(
+        'modal-open'
+    );
+
+    selectedProductSku = null;
+    modalQuantity = 1;
+}
+
+function increaseModalQuantity() {
+    modalQuantity += 1;
+
+    updateModalQuantity();
+}
+
+function decreaseModalQuantity() {
+    if (modalQuantity <= 1) {
         return;
     }
 
-    const removeButton =
-        event.target.closest('[data-remove]');
+    modalQuantity -= 1;
 
-    if (removeButton) {
-        removeFromCart(
-            removeButton.dataset.remove
+    updateModalQuantity();
+}
+
+function addModalProductToCart() {
+    if (!selectedProductSku) {
+        return;
+    }
+
+    addToCart(
+        selectedProductSku,
+        modalQuantity,
+        false
+    );
+
+    closeProductModal();
+    openCart();
+}
+
+
+/* =========================================================
+   EVENTOS
+   ========================================================= */
+
+filtersEl?.addEventListener(
+    'click',
+    event => {
+
+        const button =
+            event.target.closest(
+                'button[data-category]'
+            );
+
+        if (!button) {
+            return;
+        }
+
+        filtersEl
+            .querySelectorAll('button')
+            .forEach(item => {
+                item.classList.remove(
+                    'active'
+                );
+            });
+
+        button.classList.add('active');
+
+        renderProducts(
+            button.dataset.category ||
+            'todos'
         );
     }
-});
+);
 
-document.querySelector('#openCart')?.addEventListener(
+
+productsEl?.addEventListener(
+    'click',
+    event => {
+
+        const addButton =
+            event.target.closest(
+                '[data-add]'
+            );
+
+        if (addButton) {
+
+            event.stopPropagation();
+
+            addToCart(
+                addButton.dataset.add
+            );
+
+            return;
+        }
+
+        const productCard =
+            event.target.closest(
+                '[data-product-sku]'
+            );
+
+        if (!productCard) {
+            return;
+        }
+
+        openProductModal(
+            productCard.dataset.productSku
+        );
+    }
+);
+
+
+productsEl?.addEventListener(
+    'keydown',
+    event => {
+
+        if (
+            event.key !== 'Enter' &&
+            event.key !== ' '
+        ) {
+            return;
+        }
+
+        const productCard =
+            event.target.closest(
+                '[data-product-sku]'
+            );
+
+        if (!productCard) {
+            return;
+        }
+
+        event.preventDefault();
+
+        openProductModal(
+            productCard.dataset.productSku
+        );
+    }
+);
+
+
+cartItemsEl?.addEventListener(
+    'click',
+    event => {
+
+        const increaseButton =
+            event.target.closest(
+                '[data-increase]'
+            );
+
+        if (increaseButton) {
+
+            addToCart(
+                increaseButton.dataset.increase,
+                1,
+                false
+            );
+
+            return;
+        }
+
+        const decreaseButton =
+            event.target.closest(
+                '[data-decrease]'
+            );
+
+        if (decreaseButton) {
+
+            decreaseFromCart(
+                decreaseButton.dataset.decrease
+            );
+
+            return;
+        }
+
+        const removeButton =
+            event.target.closest(
+                '[data-remove]'
+            );
+
+        if (removeButton) {
+
+            removeFromCart(
+                removeButton.dataset.remove
+            );
+        }
+    }
+);
+
+
+document.querySelector(
+    '#openCart'
+)?.addEventListener(
     'click',
     openCart
 );
 
-document.querySelector('#closeCart')?.addEventListener(
+
+document.querySelector(
+    '#closeCart'
+)?.addEventListener(
     'click',
     closeCart
 );
+
 
 backdropEl?.addEventListener(
     'click',
     closeCart
 );
 
-document.querySelector('#checkout')?.addEventListener(
+
+closeProductModalButton?.addEventListener(
+    'click',
+    closeProductModal
+);
+
+
+productModalBackdropEl?.addEventListener(
+    'click',
+    closeProductModal
+);
+
+
+modalIncreaseButton?.addEventListener(
+    'click',
+    increaseModalQuantity
+);
+
+
+modalDecreaseButton?.addEventListener(
+    'click',
+    decreaseModalQuantity
+);
+
+
+modalAddToCartButton?.addEventListener(
+    'click',
+    addModalProductToCart
+);
+
+
+document.addEventListener(
+    'keydown',
+    event => {
+
+        if (
+            event.key === 'Escape' &&
+            productModalEl?.classList.contains(
+                'open'
+            )
+        ) {
+            closeProductModal();
+
+            return;
+        }
+
+        if (
+            event.key === 'Escape' &&
+            cartDrawerEl?.classList.contains(
+                'open'
+            )
+        ) {
+            closeCart();
+        }
+    }
+);
+
+
+document.querySelector(
+    '#checkout'
+)?.addEventListener(
     'click',
     () => {
+
         if (!cart.length) {
-            alert('Adicione algum produto primeiro.');
+            alert(
+                'Adicione algum produto primeiro.'
+            );
+
             return;
         }
 
@@ -485,11 +904,19 @@ document.querySelector('#checkout')?.addEventListener(
     }
 );
 
+
+/* =========================================================
+   INICIALIZAÇÃO
+   ========================================================= */
+
 async function init() {
+
     try {
+
         cart = loadCart();
 
-        products = await loadProducts();
+        products =
+            await loadProducts();
 
         console.log(
             `Auréa: ${products.length} produtos carregados do CSV.`
@@ -498,10 +925,35 @@ async function init() {
         renderFilters();
         renderProducts();
         renderCart();
+
     } catch (error) {
-        showCatalogError(error);
+
+        console.error(
+            'Erro ao carregar catálogo:',
+            error
+        );
+
+        if (productsEl) {
+
+            productsEl.innerHTML = `
+                <div class="catalog-error">
+
+                    <h3>
+                        Não foi possível carregar o catálogo.
+                    </h3>
+
+                    <p>
+                        Verifique se o arquivo
+                        <strong>
+                            data/produtos.csv
+                        </strong>
+                        está disponível.
+                    </p>
+
+                </div>
+            `;
+        }
     }
 }
 
 init();
-
