@@ -1,9 +1,10 @@
-import { fetchAddressByCep } from './checkout/address-service.js';
+import { fetchAddressByCep } from './address-service.js';
+import { saveOrder as persistOrder } from '../orders/order-service.js';
 
 'use strict';
 
 const CART_STORAGE_KEY = 'aurea-cart';
-const ORDER_STORAGE_KEY = 'aurea-last-order';
+/* const ORDER_STORAGE_KEY = 'aurea-last-order'; */
 
 const CATALOG_PATH = '../data/produtos.csv';
 
@@ -806,11 +807,7 @@ function createOrderId() {
 
 
 function saveOrder(order) {
-
-    localStorage.setItem(
-        ORDER_STORAGE_KEY,
-        JSON.stringify(order)
-    );
+    return persistOrder(order);
 }
 
 
