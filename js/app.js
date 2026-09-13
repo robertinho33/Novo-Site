@@ -1,4 +1,4 @@
-﻿'use strict';
+'use strict';
 
 import { loadProducts } from './catalog/catalog-service.js';
 import { formatCurrency } from './utils/formatters.js';
@@ -898,9 +898,7 @@ document.querySelector(
             return;
         }
 
-        alert(
-            'Pedido demonstrativo — o checkout será implementado na ETAPA 4/7.'
-        );
+        window.location.href = 'pages/checkout.html';
     }
 );
 

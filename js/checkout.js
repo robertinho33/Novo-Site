@@ -3,7 +3,7 @@
 const CART_STORAGE_KEY = 'aurea-cart';
 const ORDER_STORAGE_KEY = 'aurea-last-order';
 
-const CATALOG_PATH = 'data/produtos.csv';
+const CATALOG_PATH = '../data/produtos.csv';
 
 const DELIVERY_COST = 19.90;
 

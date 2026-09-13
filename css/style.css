@@ -10,7 +10,7 @@ nav{display:flex;gap:34px;color:var(--muted);font-size:13px}nav a:hover{color:va
 .hero{min-height:calc(100vh - 78px);padding:7vw 6vw;display:grid;grid-template-columns:1fr 1fr;gap:7vw;align-items:center}
 .eyebrow{font-size:10px;letter-spacing:.24em;font-weight:700;color:var(--muted);margin:0 0 22px}.hero h1{font-size:clamp(52px,7vw,100px);line-height:.92;letter-spacing:-.05em;margin:0 0 28px;font-weight:500}.hero h1 em,.ritual h2 em{font-family:"Playfair Display",serif;font-weight:500}.hero-text{max-width:480px;color:var(--muted);line-height:1.8;font-size:15px;margin-bottom:34px}
 .primary{display:inline-flex;gap:22px;align-items:center;background:var(--ink);color:var(--white);padding:16px 20px;font-size:12px;font-weight:700;transition:.2s}.primary:hover{transform:translateY(-2px)}.primary span{font-size:18px}
-.hero-card{height:min(620px,70vh);min-height:450px;background:var(--cream);position:relative;overflow:hidden}.orb{width:70%;aspect-ratio:1;border-radius:50%;background:#d2b49b;position:absolute;left:15%;top:10%;filter:blur(1px)}.product-shape{position:absolute;width:31%;height:58%;background:#f8f1e8;border:1px solid #d7cabc;border-radius:90px 90px 35px 35px;left:34.5%;top:23%;box-shadow:25px 25px 50px #9b765333}.product-shape:before{content:"AURÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â°A";position:absolute;top:45%;left:0;right:0;text-align:center;font-size:9px;letter-spacing:.25em}.floating-note{position:absolute;bottom:30px;left:30px;font-size:10px;line-height:1.6;letter-spacing:.15em}.floating-note strong{font-family:"Playfair Display";font-size:18px;letter-spacing:0}
+.hero-card{height:min(620px,70vh);min-height:450px;background:var(--cream);position:relative;overflow:hidden}.orb{width:70%;aspect-ratio:1;border-radius:50%;background:#d2b49b;position:absolute;left:15%;top:10%;filter:blur(1px)}.product-shape{position:absolute;width:31%;height:58%;background:#f8f1e8;border:1px solid #d7cabc;border-radius:90px 90px 35px 35px;left:34.5%;top:23%;box-shadow:25px 25px 50px #9b765333}.product-shape:before{content:"AURA";position:absolute;top:45%;left:0;right:0;text-align:center;font-size:9px;letter-spacing:.25em}.floating-note{position:absolute;bottom:30px;left:30px;font-size:10px;line-height:1.6;letter-spacing:.15em}.floating-note strong{font-family:"Playfair Display";font-size:18px;letter-spacing:0}
 .collection{padding:100px 6vw}.section-head{display:flex;justify-content:space-between;align-items:end;margin-bottom:45px}.section-head h2{font-size:clamp(34px,4vw,58px);letter-spacing:-.04em;margin:0}.filters{display:flex;gap:22px}.filters button{font-size:12px;color:var(--muted);padding-bottom:7px;border-bottom:1px solid transparent}.filters button.active,.filters button:hover{color:var(--ink);border-color:var(--ink)}
 .products{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}.product{background:#fff;min-width:0}.product-visual{aspect-ratio:1/1.15;background:var(--cream);position:relative;display:grid;place-items:center;overflow:hidden}.product-visual:after{content:"";width:42%;height:63%;background:#eee7de;border:1px solid #d4c9bc;border-radius:55px 55px 20px 20px;box-shadow:15px 18px 30px #75624a22}.product:nth-child(2n) .product-visual:after{width:52%;height:42%;border-radius:20px}.product:nth-child(3n) .product-visual:after{width:28%;height:70%;border-radius:80px}.tag{position:absolute;left:12px;top:12px;background:#fff;padding:7px 9px;font-size:9px;letter-spacing:.12em;z-index:1}.product-info{padding:18px}.product-info h3{font-size:14px;margin:0 0 7px}.product-info p{font-size:11px;color:var(--muted);margin:0 0 15px}.product-bottom{display:flex;align-items:center;justify-content:space-between}.price{font-weight:700;font-size:13px}.add{width:32px;height:32px;border:1px solid var(--line);font-size:18px}.add:hover{background:var(--ink);color:#fff}
 .ritual{background:var(--ink);color:#fff;padding:100px 6vw;display:grid;grid-template-columns:1fr 1.5fr;gap:8vw}.ritual .eyebrow{color:#aaa}.ritual h2{font-size:clamp(42px,5vw,70px);font-weight:500;line-height:1;margin:0}.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:30px}.steps article{border-top:1px solid #555;padding-top:20px}.steps span{font-size:10px;color:#aaa}.steps h3{font-size:17px;margin:45px 0 10px}.steps p{font-size:12px;color:#aaa;line-height:1.7}
@@ -21,7 +21,7 @@ footer{padding:25px 6vw;border-top:1px solid var(--line);display:flex;justify-co
 @media(max-width:520px){.topbar{padding:0 20px}.hero,.collection,.ritual{padding-left:20px;padding-right:20px}.hero-card{min-height:360px;height:65vh}.products{grid-template-columns:1fr 1fr;gap:10px}.product-info{padding:12px}.product-info h3{font-size:12px}.manifesto{padding:90px 25px}footer{padding:20px;gap:15px;flex-direction:column}}
 
 /* =========================================================
-   CATÃƒÆ’Ã†â€™Ãƒâ€šÃ‚ÂLOGO ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â IMAGENS REAIS
+   CATLOGO  IMAGENS REAIS
    ========================================================= */
 
 .product-image {
@@ -99,7 +99,7 @@ footer{padding:25px 6vw;border-top:1px solid var(--line);display:flex;justify-co
 }
 
 /* =========================================================
-   ETAPA 2/7 ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â SACOLA PROFISSIONAL
+   ETAPA 2/7  SACOLA PROFISSIONAL
    ========================================================= */
 
 .cart-summary-top {
@@ -365,7 +365,7 @@ footer{padding:25px 6vw;border-top:1px solid var(--line);display:flex;justify-co
 }
 
 /* =========================================================
-   ETAPA 3/7 ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â PÃƒÆ’Ã‚ÂGINA / MODAL DE PRODUTO
+   ETAPA 3/7  PGINA / MODAL DE PRODUTO
    ========================================================= */
 
 .product {
@@ -779,7 +779,7 @@ body.modal-open {
 }
 
 /* =========================================================
-   ETAPA 3/7 ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â AJUSTE FINAL DO MODAL
+   ETAPA 3/7  AJUSTE FINAL DO MODAL
    ========================================================= */
 .product-modal-details {
     background: #f8f5f0;
