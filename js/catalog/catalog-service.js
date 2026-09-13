@@ -3,7 +3,7 @@
 const CATALOG_PATH = 'data/produtos.csv';
 
 /**
- * Converte preÃ§o brasileiro para nÃºmero.
+ * Converte preço brasileiro para nÃºmero.
  *
  * Exemplos:
  * "64,9"      -> 64.9
@@ -149,10 +149,10 @@ function normalizeProduct(row) {
         sku: String(row.SKU || '').trim(),
         name: String(row.Produto || '').trim(),
         weight: String(row.Peso || '').trim(),
-        price: parsePrice(row.PreÃ§o),
+        price: parsePrice(row.Preço),
         category: String(row.Categoria || '').trim(),
         stock: String(row.Estoque || '').trim(),
-        description: String(row.DescriÃ§Ã£o || '').trim(),
+        description: String(row.Descrição || '').trim(),
         image: String(row.Imagem || '').trim()
     };
 }
@@ -167,7 +167,7 @@ export async function loadProducts() {
 
     if (!response.ok) {
         throw new Error(
-            `NÃ£o foi possÃ­vel carregar o catÃ¡logo. HTTP ${response.status}`
+            `Não foi possÃ­vel carregar o catálogo. HTTP ${response.status}`
         );
     }
 
