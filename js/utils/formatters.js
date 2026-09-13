@@ -1,7 +1,7 @@
 ﻿'use strict';
 
 /**
- * Formata valores numÃ©ricos para moeda brasileira.
+ * Formata valores numéricos para moeda brasileira.
  */
 export function formatCurrency(value) {
     const number = Number(value);

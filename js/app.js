@@ -128,7 +128,7 @@ function addToCart(
 
     if (!product) {
         console.error(
-            'Produto nÃ£o encontrado:',
+            'Produto não encontrado:',
             sku
         );
 
@@ -274,7 +274,7 @@ function renderProducts(category = 'todos') {
             `
             : `
                 <div class="product-image-placeholder">
-                    AURï¿½?A
+                    AURÉA
                 </div>
             `;
 
@@ -327,7 +327,7 @@ function renderProducts(category = 'todos') {
                             class="add"
                             type="button"
                             data-add="${escapeAttribute(product.sku)}"
-                            aria-label="Adicionar ${escapeAttribute(product.name)} Ã  sacola"
+                            aria-label="Adicionar ${escapeAttribute(product.name)} à sacola"
                         >
                             +
                         </button>
@@ -344,7 +344,7 @@ function renderProducts(category = 'todos') {
 
 
 /* =========================================================
-   SACOLA ï¿½?" RENDER
+   SACOLA — RENDER
    ========================================================= */
 
 function renderCart() {
@@ -380,7 +380,7 @@ function renderCart() {
 
         cartItemsEl.innerHTML = `
             <div class="empty">
-                Sua sacola estÃ¡ esperando por vocÃª.
+                Sua sacola está esperando por você.
             </div>
         `;
 
@@ -439,7 +439,7 @@ function renderCart() {
                             data-decrease="${escapeAttribute(product.sku)}"
                             aria-label="Diminuir quantidade"
                         >
-                            ï¿½^'
+                            -
                         </button>
 
                         <span>
@@ -546,12 +546,12 @@ function openProductModal(sku) {
 
     if (productModalWeightEl) {
         productModalWeightEl.textContent =
-            product.weight || 'NÃ£o informado';
+            product.weight || 'Não informado';
     }
 
     if (productModalStockEl) {
         productModalStockEl.textContent =
-            product.stock || 'NÃ£o informado';
+            product.stock || 'Não informado';
     }
 
     if (productModalPriceEl) {
@@ -904,7 +904,7 @@ document.querySelector(
 
 
 /* =========================================================
-   INICIALIZAï¿½?ï¿½fO
+   INICIALIZAÇÃO
    ========================================================= */
 
 async function init() {
@@ -917,7 +917,7 @@ async function init() {
             await loadProducts();
 
         console.log(
-            `AurÃ©a: ${products.length} produtos carregados do CSV.`
+            `Auréa: ${products.length} produtos carregados do CSV.`
         );
 
         renderFilters();
@@ -927,7 +927,7 @@ async function init() {
     } catch (error) {
 
         console.error(
-            'Erro ao carregar catÃ¡logo:',
+            'Erro ao carregar catálogo:',
             error
         );
 
@@ -937,7 +937,7 @@ async function init() {
                 <div class="catalog-error">
 
                     <h3>
-                        NÃ£o foi possÃ­vel carregar o catÃ¡logo.
+                        Não foi possível carregar o catálogo.
                     </h3>
 
                     <p>
@@ -945,7 +945,7 @@ async function init() {
                         <strong>
                             data/produtos.csv
                         </strong>
-                        estÃ¡ disponÃ­vel.
+                        está disponível.
                     </p>
 
                 </div>
