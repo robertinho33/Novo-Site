@@ -1,20 +1,16 @@
-'use strict';
-
-const CEP_API_BASE = 'https://viacep.com.br/ws';
+/* js/checkout/address-service.js */
 
 export async function fetchAddressByCep(cep) {
-    const cleanCep = String(cep || '').replace(/\D/g, '');
+    const cleanCep = String(cep).replace(/\D/g, '');
 
     if (cleanCep.length !== 8) {
         throw new Error('CEP inválido.');
     }
 
-    const response = await fetch(
-        `${CEP_API_BASE}/${cleanCep}/json/`
-    );
+    const response = await fetch(`https://viacep.com.br/ws/${cleanCep}/json/`);
 
     if (!response.ok) {
-        throw new Error('Não foi possível consultar o CEP.');
+        throw new Error('Falha na requisição ao serviço de CEP.');
     }
 
     const data = await response.json();
@@ -24,7 +20,6 @@ export async function fetchAddressByCep(cep) {
     }
 
     return {
-        cep: data.cep || '',
         street: data.logradouro || '',
         neighborhood: data.bairro || '',
         city: data.localidade || '',

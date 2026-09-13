@@ -591,6 +591,10 @@ function showSuccess(order) {
    ENVIO
    ========================================================= */
 
+/* =========================================================
+   CONSULTA DE CEP (AUTOCOMPLETE VIA VIA CEP)
+   ========================================================= */
+
 async function handleCepLookup() {
     const cepInput = document.querySelector('#addressZip');
 
@@ -600,25 +604,47 @@ async function handleCepLookup() {
 
     const cep = cepInput.value.replace(/\D/g, '');
 
+    // Dispara a consulta apenas se tiver os 8 dígitos completos
     if (cep.length !== 8) {
         return;
     }
 
+    const street = document.querySelector('#addressStreet');
+    const neighborhood = document.querySelector('#addressNeighborhood');
+    const city = document.querySelector('#addressCity');
+    const state = document.querySelector('#addressState');
+    const number = document.querySelector('#addressNumber');
+
     try {
+        // Indica visualmente que a busca está em andamento
+        cepInput.disabled = true;
+
         const address = await fetchAddressByCep(cep);
 
-        const street = document.querySelector('#addressStreet');
-        const neighborhood = document.querySelector('#addressNeighborhood');
-        const city = document.querySelector('#addressCity');
-        const state = document.querySelector('#addressState');
+        // Preenche os campos retornados pela API
+        if (street && address.street) street.value = address.street;
+        if (neighborhood && address.neighborhood) neighborhood.value = address.neighborhood;
+        if (city && address.city) city.value = address.city;
+        if (state && address.state) state.value = address.state;
 
-        if (street) street.value = address.street;
-        if (neighborhood) neighborhood.value = address.neighborhood;
-        if (city) city.value = address.city;
-        if (state) state.value = address.state;
+        // Limpa erros anteriores do CEP
+        const fieldContainer = cepInput.closest('.checkout-field');
+        if (fieldContainer) fieldContainer.classList.remove('invalid');
+        const errorEl = document.querySelector('[data-error-for="addressZip"]');
+        if (errorEl) errorEl.textContent = '';
+
+        // Foca automaticamente no número para agilizar o preenchimento
+        if (number) {
+            number.focus();
+        }
 
     } catch (error) {
-        console.warn('Consulta de CEP:', error.message);
+        console.warn('Erro ao consultar CEP:', error.message);
+        
+        // Exibe feedback visual se o CEP não for encontrado
+        setFieldError('addressZip', 'CEP não encontrado. Preencha o endereço manualmente.');
+    } finally {
+        cepInput.disabled = false;
     }
 }
 
