@@ -1,4 +1,4 @@
-'use strict';
+﻿'use strict';
 
 import { loadProducts } from './catalog/catalog-service.js';
 import { formatCurrency } from './utils/formatters.js';
@@ -128,7 +128,7 @@ function addToCart(
 
     if (!product) {
         console.error(
-            'Produto não encontrado:',
+            'Produto nÃ£o encontrado:',
             sku
         );
 
@@ -274,7 +274,7 @@ function renderProducts(category = 'todos') {
             `
             : `
                 <div class="product-image-placeholder">
-                    AUR�?A
+                    AURï¿½?A
                 </div>
             `;
 
@@ -327,7 +327,7 @@ function renderProducts(category = 'todos') {
                             class="add"
                             type="button"
                             data-add="${escapeAttribute(product.sku)}"
-                            aria-label="Adicionar ${escapeAttribute(product.name)} à sacola"
+                            aria-label="Adicionar ${escapeAttribute(product.name)} Ã  sacola"
                         >
                             +
                         </button>
@@ -344,7 +344,7 @@ function renderProducts(category = 'todos') {
 
 
 /* =========================================================
-   SACOLA �?" RENDER
+   SACOLA ï¿½?" RENDER
    ========================================================= */
 
 function renderCart() {
@@ -380,7 +380,7 @@ function renderCart() {
 
         cartItemsEl.innerHTML = `
             <div class="empty">
-                Sua sacola está esperando por você.
+                Sua sacola estÃ¡ esperando por vocÃª.
             </div>
         `;
 
@@ -439,7 +439,7 @@ function renderCart() {
                             data-decrease="${escapeAttribute(product.sku)}"
                             aria-label="Diminuir quantidade"
                         >
-                            �^'
+                            ï¿½^'
                         </button>
 
                         <span>
@@ -546,12 +546,12 @@ function openProductModal(sku) {
 
     if (productModalWeightEl) {
         productModalWeightEl.textContent =
-            product.weight || 'Não informado';
+            product.weight || 'NÃ£o informado';
     }
 
     if (productModalStockEl) {
         productModalStockEl.textContent =
-            product.stock || 'Não informado';
+            product.stock || 'NÃ£o informado';
     }
 
     if (productModalPriceEl) {
@@ -904,7 +904,7 @@ document.querySelector(
 
 
 /* =========================================================
-   INICIALIZA�?�fO
+   INICIALIZAï¿½?ï¿½fO
    ========================================================= */
 
 async function init() {
@@ -917,7 +917,7 @@ async function init() {
             await loadProducts();
 
         console.log(
-            `Auréa: ${products.length} produtos carregados do CSV.`
+            `AurÃ©a: ${products.length} produtos carregados do CSV.`
         );
 
         renderFilters();
@@ -927,7 +927,7 @@ async function init() {
     } catch (error) {
 
         console.error(
-            'Erro ao carregar catálogo:',
+            'Erro ao carregar catÃ¡logo:',
             error
         );
 
@@ -937,7 +937,7 @@ async function init() {
                 <div class="catalog-error">
 
                     <h3>
-                        Não foi possível carregar o catálogo.
+                        NÃ£o foi possÃ­vel carregar o catÃ¡logo.
                     </h3>
 
                     <p>
@@ -945,7 +945,7 @@ async function init() {
                         <strong>
                             data/produtos.csv
                         </strong>
-                        está disponível.
+                        estÃ¡ disponÃ­vel.
                     </p>
 
                 </div>

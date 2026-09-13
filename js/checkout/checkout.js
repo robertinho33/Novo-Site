@@ -1,4 +1,4 @@
-import { fetchAddressByCep } from './address-service.js';
+﻿import { fetchAddressByCep } from './address-service.js';
 import { saveOrder as persistOrder } from '../orders/order-service.js';
 
 'use strict';
@@ -15,7 +15,7 @@ let cart = [];
 
 
 /* =========================================================
-   UTILITï¿½fÂRIOS
+   UTILITÃ¯Â¿Â½fÃ‚ÂRIOS
    ========================================================= */
 
 function formatCurrency(value) {
@@ -179,7 +179,7 @@ function normalizeProduct(row) {
     return {
         sku: String(row.SKU || '').trim(),
         name: String(row.Produto || '').trim(),
-        price: parsePrice(row.Preï¿½fÂ§o),
+        price: parsePrice(row.PreÃ¯Â¿Â½fÃ‚Â§o),
         image: String(row.Imagem || '').trim()
     };
 }
@@ -236,7 +236,7 @@ async function loadProducts() {
 
     if (!response.ok) {
         throw new Error(
-            `Nï¿½fÂ£o foi possï¿½fÂ­vel carregar o catï¿½fÂ¡logo. HTTP ${response.status}`
+            `NÃ¯Â¿Â½fÃ‚Â£o foi possÃ¯Â¿Â½fÃ‚Â­vel carregar o catÃ¯Â¿Â½fÃ‚Â¡logo. HTTP ${response.status}`
         );
     }
 
@@ -352,7 +352,7 @@ function renderCheckoutItems() {
                     </strong>
 
                     <small>
-                        ${item.quantity} ï¿½fï¿½?"
+                        ${item.quantity} Ã¯Â¿Â½fÃ¯Â¿Â½?"
                         ${formatCurrency(item.product.price)}
                     </small>
 
@@ -388,7 +388,7 @@ function renderTotals() {
     if (shipping) {
         shipping.textContent =
             getShippingCost() === 0
-                ? 'Grï¿½fÂ¡tis'
+                ? 'GrÃ¯Â¿Â½fÃ‚Â¡tis'
                 : formatCurrency(getShippingCost());
     }
 
@@ -440,7 +440,7 @@ function updateDeliveryFields() {
 
 
 /* =========================================================
-   FORMATAï¿½fï¿½?ï¿½ï¿½fï¿½'O
+   FORMATAÃ¯Â¿Â½fÃ¯Â¿Â½?Ã¯Â¿Â½Ã¯Â¿Â½fÃ¯Â¿Â½'O
    ========================================================= */
 
 function formatCEP(value) {
@@ -508,7 +508,7 @@ function setupFormatting() {
 
 
 /* =========================================================
-   VALIDAï¿½fï¿½?ï¿½ï¿½fï¿½'O
+   VALIDAÃ¯Â¿Â½fÃ¯Â¿Â½?Ã¯Â¿Â½Ã¯Â¿Â½fÃ¯Â¿Â½'O
    ========================================================= */
 
 function clearErrors() {
@@ -579,7 +579,7 @@ function validateForm() {
     if (phoneDigits.length < 10) {
         setFieldError(
             'customerPhone',
-            'Informe um telefone vï¿½fÂ¡lido.'
+            'Informe um telefone vÃ¯Â¿Â½fÃ‚Â¡lido.'
         );
 
         valid = false;
@@ -592,7 +592,7 @@ function validateForm() {
 
         setFieldError(
             'customerEmail',
-            'Informe um e-mail vï¿½fÂ¡lido.'
+            'Informe um e-mail vÃ¯Â¿Â½fÃ‚Â¡lido.'
         );
 
         valid = false;
@@ -611,7 +611,7 @@ function validateForm() {
             ],
             [
                 'addressNumber',
-                'Informe o nï¿½fÂºmero.'
+                'Informe o nÃ¯Â¿Â½fÃ‚Âºmero.'
             ],
             [
                 'addressNeighborhood',
@@ -657,7 +657,7 @@ function validateForm() {
 
             setFieldError(
                 'addressZip',
-                'Informe um CEP vï¿½fÂ¡lido.'
+                'Informe um CEP vÃ¯Â¿Â½fÃ‚Â¡lido.'
             );
 
             valid = false;
@@ -812,7 +812,7 @@ function saveOrder(order) {
 
 
 /* =========================================================
-   CONFIRMAï¿½fï¿½?ï¿½ï¿½fï¿½'O
+   CONFIRMAÃ¯Â¿Â½fÃ¯Â¿Â½?Ã¯Â¿Â½Ã¯Â¿Â½fÃ¯Â¿Â½'O
    ========================================================= */
 
 function showSuccess(order) {
@@ -910,7 +910,7 @@ function handleSubmit(event) {
         if (message) {
             message.hidden = false;
             message.textContent =
-                'Sua sacola estï¿½fÂ¡ vazia. Volte ï¿½fÂ  loja e adicione produtos.';
+                'Sua sacola estÃ¯Â¿Â½fÃ‚Â¡ vazia. Volte Ã¯Â¿Â½fÃ‚Â  loja e adicione produtos.';
         }
 
         return;
@@ -940,7 +940,7 @@ function handleSubmit(event) {
     saveOrder(order);
 
     /*
-     * O carrinho sï¿½fÂ³ ï¿½fÂ© limpo depois que o pedido
+     * O carrinho sÃ¯Â¿Â½fÃ‚Â³ Ã¯Â¿Â½fÃ‚Â© limpo depois que o pedido
      * foi criado e salvo com sucesso.
      */
     localStorage.removeItem(
@@ -979,7 +979,7 @@ function setupEvents() {
 
 
 /* =========================================================
-   INICIALIZAï¿½fï¿½?ï¿½ï¿½fï¿½'O
+   INICIALIZAÃ¯Â¿Â½fÃ¯Â¿Â½?Ã¯Â¿Â½Ã¯Â¿Â½fÃ¯Â¿Â½'O
    ========================================================= */
 
 async function init() {
@@ -1042,8 +1042,8 @@ async function init() {
             message.hidden = false;
 
             message.textContent =
-                'Nï¿½fÂ£o foi possï¿½fÂ­vel carregar o checkout. ' +
-                'Atualize a pï¿½fÂ¡gina e tente novamente.';
+                'NÃ¯Â¿Â½fÃ‚Â£o foi possÃ¯Â¿Â½fÃ‚Â­vel carregar o checkout. ' +
+                'Atualize a pÃ¯Â¿Â½fÃ‚Â¡gina e tente novamente.';
         }
     }
 }

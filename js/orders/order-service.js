@@ -1,14 +1,14 @@
-'use strict';
+﻿'use strict';
 
 import { saveOrder as repositorySaveOrder } from './order-repository.js';
 
 export function saveOrder(order) {
     if (!order || typeof order !== 'object') {
-        throw new Error('Pedido inválido.');
+        throw new Error('Pedido invÃ¡lido.');
     }
 
     if (!order.id) {
-        throw new Error('Pedido sem identificação.');
+        throw new Error('Pedido sem identificaÃ§Ã£o.');
     }
 
     if (!order.customer?.name) {
@@ -20,7 +20,7 @@ export function saveOrder(order) {
     }
 
     if (!order.financial) {
-        throw new Error('Pedido sem informações financeiras.');
+        throw new Error('Pedido sem informaÃ§Ãµes financeiras.');
     }
 
     return repositorySaveOrder(order);

@@ -1,9 +1,9 @@
-'use strict';
+﻿'use strict';
 
 const CATALOG_PATH = 'data/produtos.csv';
 
 /**
- * Converte preço brasileiro para número.
+ * Converte preÃ§o brasileiro para nÃºmero.
  *
  * Exemplos:
  * "64,9"      -> 64.9
@@ -77,7 +77,7 @@ function parseCSVLine(line) {
 }
 
 /**
- * Divide o conteúdo em linhas sem quebrar campos
+ * Divide o conteÃºdo em linhas sem quebrar campos
  * que contenham quebras de linha dentro de aspas.
  */
 function parseCSV(text) {
@@ -149,10 +149,10 @@ function normalizeProduct(row) {
         sku: String(row.SKU || '').trim(),
         name: String(row.Produto || '').trim(),
         weight: String(row.Peso || '').trim(),
-        price: parsePrice(row.Preço),
+        price: parsePrice(row.PreÃ§o),
         category: String(row.Categoria || '').trim(),
         stock: String(row.Estoque || '').trim(),
-        description: String(row.Descrição || '').trim(),
+        description: String(row.DescriÃ§Ã£o || '').trim(),
         image: String(row.Imagem || '').trim()
     };
 }
@@ -167,7 +167,7 @@ export async function loadProducts() {
 
     if (!response.ok) {
         throw new Error(
-            `Não foi possível carregar o catálogo. HTTP ${response.status}`
+            `NÃ£o foi possÃ­vel carregar o catÃ¡logo. HTTP ${response.status}`
         );
     }
 
