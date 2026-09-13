@@ -1,4 +1,4 @@
-# Auréa — Web App
+# Auréa �?" Web App
 
 Uma aplicação web de loja de beleza criada do zero, sem framework, com:
 - layout responsivo;

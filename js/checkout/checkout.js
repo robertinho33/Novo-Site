@@ -1,3 +1,5 @@
+import { fetchAddressByCep } from './checkout/address-service.js';
+
 'use strict';
 
 const CART_STORAGE_KEY = 'aurea-cart';
@@ -12,7 +14,7 @@ let cart = [];
 
 
 /* =========================================================
-   UTILITÁRIOS
+   UTILITï¿½fÂRIOS
    ========================================================= */
 
 function formatCurrency(value) {
@@ -176,7 +178,7 @@ function normalizeProduct(row) {
     return {
         sku: String(row.SKU || '').trim(),
         name: String(row.Produto || '').trim(),
-        price: parsePrice(row.Preço),
+        price: parsePrice(row.Preï¿½fÂ§o),
         image: String(row.Imagem || '').trim()
     };
 }
@@ -233,7 +235,7 @@ async function loadProducts() {
 
     if (!response.ok) {
         throw new Error(
-            `Não foi possível carregar o catálogo. HTTP ${response.status}`
+            `Nï¿½fÂ£o foi possï¿½fÂ­vel carregar o catï¿½fÂ¡logo. HTTP ${response.status}`
         );
     }
 
@@ -349,7 +351,7 @@ function renderCheckoutItems() {
                     </strong>
 
                     <small>
-                        ${item.quantity} ×
+                        ${item.quantity} ï¿½fï¿½?"
                         ${formatCurrency(item.product.price)}
                     </small>
 
@@ -385,7 +387,7 @@ function renderTotals() {
     if (shipping) {
         shipping.textContent =
             getShippingCost() === 0
-                ? 'Grátis'
+                ? 'Grï¿½fÂ¡tis'
                 : formatCurrency(getShippingCost());
     }
 
@@ -437,7 +439,7 @@ function updateDeliveryFields() {
 
 
 /* =========================================================
-   FORMATAÇÃO
+   FORMATAï¿½fï¿½?ï¿½ï¿½fï¿½'O
    ========================================================= */
 
 function formatCEP(value) {
@@ -505,7 +507,7 @@ function setupFormatting() {
 
 
 /* =========================================================
-   VALIDAÇÃO
+   VALIDAï¿½fï¿½?ï¿½ï¿½fï¿½'O
    ========================================================= */
 
 function clearErrors() {
@@ -576,7 +578,7 @@ function validateForm() {
     if (phoneDigits.length < 10) {
         setFieldError(
             'customerPhone',
-            'Informe um telefone válido.'
+            'Informe um telefone vï¿½fÂ¡lido.'
         );
 
         valid = false;
@@ -589,7 +591,7 @@ function validateForm() {
 
         setFieldError(
             'customerEmail',
-            'Informe um e-mail válido.'
+            'Informe um e-mail vï¿½fÂ¡lido.'
         );
 
         valid = false;
@@ -608,7 +610,7 @@ function validateForm() {
             ],
             [
                 'addressNumber',
-                'Informe o número.'
+                'Informe o nï¿½fÂºmero.'
             ],
             [
                 'addressNeighborhood',
@@ -654,7 +656,7 @@ function validateForm() {
 
             setFieldError(
                 'addressZip',
-                'Informe um CEP válido.'
+                'Informe um CEP vï¿½fÂ¡lido.'
             );
 
             valid = false;
@@ -813,7 +815,7 @@ function saveOrder(order) {
 
 
 /* =========================================================
-   CONFIRMAÇÃO
+   CONFIRMAï¿½fï¿½?ï¿½ï¿½fï¿½'O
    ========================================================= */
 
 function showSuccess(order) {
@@ -911,7 +913,7 @@ function handleSubmit(event) {
         if (message) {
             message.hidden = false;
             message.textContent =
-                'Sua sacola está vazia. Volte à loja e adicione produtos.';
+                'Sua sacola estï¿½fÂ¡ vazia. Volte ï¿½fÂ  loja e adicione produtos.';
         }
 
         return;
@@ -941,7 +943,7 @@ function handleSubmit(event) {
     saveOrder(order);
 
     /*
-     * O carrinho só é limpo depois que o pedido
+     * O carrinho sï¿½fÂ³ ï¿½fÂ© limpo depois que o pedido
      * foi criado e salvo com sucesso.
      */
     localStorage.removeItem(
@@ -980,7 +982,7 @@ function setupEvents() {
 
 
 /* =========================================================
-   INICIALIZAÇÃO
+   INICIALIZAï¿½fï¿½?ï¿½ï¿½fï¿½'O
    ========================================================= */
 
 async function init() {
@@ -1017,6 +1019,12 @@ async function init() {
 
         setupFormatting();
         setupEvents();
+        document
+            .querySelector('#addressZip')
+            ?.addEventListener(
+                'blur',
+                handleCepLookup
+            );
         updateDeliveryFields();
         renderSummary();
 
@@ -1037,8 +1045,8 @@ async function init() {
             message.hidden = false;
 
             message.textContent =
-                'Não foi possível carregar o checkout. ' +
-                'Atualize a página e tente novamente.';
+                'Nï¿½fÂ£o foi possï¿½fÂ­vel carregar o checkout. ' +
+                'Atualize a pï¿½fÂ¡gina e tente novamente.';
         }
     }
 }

@@ -1,8 +1,8 @@
-﻿'use strict';
+'use strict';
 
 const CEP_API_BASE = 'https://viacep.com.br/ws';
 
-async function fetchAddressByCep(cep) {
+export async function fetchAddressByCep(cep) {
     const cleanCep = String(cep || '').replace(/\D/g, '');
 
     if (cleanCep.length !== 8) {

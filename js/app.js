@@ -274,7 +274,7 @@ function renderProducts(category = 'todos') {
             `
             : `
                 <div class="product-image-placeholder">
-                    AURÉA
+                    AUR�?A
                 </div>
             `;
 
@@ -344,7 +344,7 @@ function renderProducts(category = 'todos') {
 
 
 /* =========================================================
-   SACOLA — RENDER
+   SACOLA �?" RENDER
    ========================================================= */
 
 function renderCart() {
@@ -439,7 +439,7 @@ function renderCart() {
                             data-decrease="${escapeAttribute(product.sku)}"
                             aria-label="Diminuir quantidade"
                         >
-                            −
+                            �^'
                         </button>
 
                         <span>
@@ -904,7 +904,7 @@ document.querySelector(
 
 
 /* =========================================================
-   INICIALIZAÇÃO
+   INICIALIZA�?�fO
    ========================================================= */
 
 async function init() {
