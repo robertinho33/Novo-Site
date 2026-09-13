@@ -855,6 +855,48 @@ function showSuccess(order) {
    ENVIO
    ========================================================= */
 
+
+async function handleCepLookup() {
+    const cepInput = document.querySelector('#addressZip');
+
+    if (!cepInput) {
+        return;
+    }
+
+    const cep = cepInput.value.replace(/\D/g, '');
+
+    if (cep.length !== 8) {
+        return;
+    }
+
+    try {
+        const address = await fetchAddressByCep(cep);
+
+        const street = document.querySelector('#addressStreet');
+        const neighborhood = document.querySelector('#addressNeighborhood');
+        const city = document.querySelector('#addressCity');
+        const state = document.querySelector('#addressState');
+
+        if (street) {
+            street.value = address.street;
+        }
+
+        if (neighborhood) {
+            neighborhood.value = address.neighborhood;
+        }
+
+        if (city) {
+            city.value = address.city;
+        }
+
+        if (state) {
+            state.value = address.state;
+        }
+
+    } catch (error) {
+        console.warn('Consulta de CEP:', error.message);
+    }
+}
 function handleSubmit(event) {
 
     event.preventDefault();
